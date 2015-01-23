@@ -1,4 +1,4 @@
-###Lesson 4
+###Lesson 4 Install hadoop on ubuntu server
 ####1. Installing Ubantu Server  
   * Select OpenSSH
   * Set up static IP (optional)  
@@ -137,7 +137,7 @@
 >`	start-dfs.sh  
 	start-yarn.sh`
 	`
-###Lesson 5
+###Lesson 5 Develop mapreduce on ubuntu desktop
 ####1. Installing Ubantu Desktop  
   * Download and install ubuntu desktop
   * Install Eclipse from software centre
@@ -160,7 +160,7 @@
 	Browse web ui  
 
 	
-###Lesson 6
+###Lesson 6 Advance mapreduce
 ####1. Set up HDFS infrastructure  
   * Check r/w rates
 >`	hadoop jar /usr/local/hadoop/hadoop-test-1.2.1.jar TestDFSIO -write nrFiles 5 -fileSize 100  
@@ -182,7 +182,7 @@
 	App.java, EarthquakeMapper.java, EarthQuakeReducer.java, input.csv  
   * Run and Browse web UI
 	
-###Lesson 7
+###Lesson 7 Pig
 ####1. Download and Install Pig
   * Download and Install
   [www.pig.apache.org](http://www.pig.apache.org)  
@@ -273,9 +273,19 @@
 	
 	Browse the web ui again.
 
-  * Example - Transform and shape Temperatures Script
+  * Example - Transform and shape Temperatures Script  
 	Create, run and browse.
-
 	
+  * Example - Grouping with no of reducer  
+	Create, run and browse  
+
+###Lesson 8 Hive
+####1. Download and Install Hive
+  * Download and Install
+  [www.hive.apache.org](http://www.hive.apache.org)  
+  Project->Release-> version 0.11.1  
+>`	tar -xvzf pig-0.11.1.tar.gz  
+	ln -s <pig folder> /usr/local/pig  
+	vi .bashrc  	
 	
   
