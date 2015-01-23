@@ -230,7 +230,7 @@
 	words = FOREACH file GENERATE FLATTEN(TOKENIZE(lines)) as word;  
 	dump words;`
   
-####3. Load a file	
+####3. Examples	
   * Example - User login 
 >`	vi login.txt  
 	name, 20150122114530  
@@ -259,8 +259,22 @@
   * Example - Count the Occurances script  
     Create script, run on war_and_peace.txt, browse web ui  
 	
-  
+  * Example - Combining, Splitting, and Joining of Temperatures
+>`	jan = LOAD 'hdfs:/data/big/201201hourly.txt USING PigStorage(',');  
+	feb = LOAD 'hdfs:/data/big/201202hourly.txt USING PigStorage(',');  
+	mar = LOAD 'hdfs:/data/big/201203hourly.txt USING PigStorage(',');  
+	apr = LOAD 'hdfs:/data/big/201204hourly.txt USING PigStorage(',');  
+	month_quad = UNION jan,feb,mar,apr;  
+	Store month_quad into 'hdfs:/data/big/pigresults/month_quad';`
 	
+	Browse the web ui. (50070)  
+>`	SPLIT month_quad INTO split_jan IF SUBSTRING (date, 4, 6) == '01', split_feb IF SUBSTRING (date, 4, 6) == '02', split_mar IF SUBSTRING (date, 4, 6) == '03', split_apr IF SUBSRTING (date, 4, 6) == '04';  
+	STORE split_jan INTO 'hdfs:/data/big/results/jan';`
+	
+	Browse the web ui again.
+
+  * Example - Transform and shape Temperatures Script
+	Create, run and browse.
 
 	
 	
