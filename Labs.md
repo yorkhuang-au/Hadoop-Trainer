@@ -2,7 +2,7 @@
 ####1. Installing Ubantu Server  
   * Select OpenSSH
   * Set up static IP (optional)  
->`	sudo vi /etc/hostname  
+>`	sudo vi /etc/hostname   
 	uhs1  
 	sudo vi /etc/network/interfaces  
 	auto eth0  
@@ -11,8 +11,6 @@
 	     netmask 255.255.255.0  
 	     gateway 192.168.186.2  
 	     dns-nameservers 192.168.186.2  
-	sudo vi /etc/hosts  
-	change uhs1 to 192.168.186.3  
 	sudo ifdown eth0  
 	sudo ifup eth0  
 	or sudo reboot
@@ -24,8 +22,9 @@
 ####2. Installing Hadoop on Ubantu Server  
   * Update Ubuntu Server  
 >`	sudo apt-get update`
-  * Install ssh client  
->`	sugo apt-get install openssh-client`  
+  * Install ssh and rsync  
+>`	sudo apt-get install ssh  
+	sudo apt-get install rsync`  
   * Create ssh key
 >`	ssh_keygen  
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys  
@@ -104,7 +103,8 @@
 	vi /usr/local/hadoop/conf/slaves  
 	<its own ip>  
 	vi core-site.xml, hdfs-site.xml, mapred-site.xml  
-	ssh-copy-id -i ~/.ssh/id_rsa hadoop-user@<master ip>`
+	ssh-copy-id -i ~/.ssh/id_rsa hadoop-user@<master ip>  
+	rm -rf /usr/local/hadoop/tmp/*`
 	<br><br>
 	On master  
 >`	start-all.sh`  
