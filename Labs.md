@@ -16,7 +16,7 @@
 	or sudo reboot
 	`
 	<br><br>
->`	edit c:\windows\system32\drivers\etc\hosts
+>`	edit c:\windows\system32\drivers\etc\hosts  
 	<server ip> <server name>`
 
 ####2. Installing Hadoop on Ubantu Server  
@@ -127,8 +127,12 @@
 >`	vi hadoop-env.sh  
 	JAVA_HOME HADOOP_PREFIX`
 	<br><br>
+>`	mkdir /usr/local/hadoop/tmp  
+	mkdir /usr/local/hadoop/logs`
+	<br><br>
 >`	vi core-site.xml  
-	fs.defaultFS = hdfs://<server ip>:9000`
+	fs.defaultFS = hdfs://<server ip>:9000  
+	hadoop.tmp.dir=/usr/local/hadoop/tmp`
 	<br><br>
 >`	vi hdfs-site.xml  
 	dfs.replication = 1`
@@ -139,7 +143,8 @@
 >`	vi yarn-site.xml  
 	yarn.nodemanager.aux-services = mapreduce_shuffle`
 	<br><br>
->`	start-dfs.sh  
+>`	hdfs namenode -format  
+	start-dfs.sh  
 	start-yarn.sh`
 	`
 ###Lesson 5 Develop mapreduce on ubuntu desktop
