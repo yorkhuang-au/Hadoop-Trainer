@@ -283,9 +283,158 @@
 ####1. Download and Install Hive
   * Download and Install
   [www.hive.apache.org](http://www.hive.apache.org)  
-  Project->Release-> version 0.11.1  
->`	tar -xvzf pig-0.11.1.tar.gz  
-	ln -s <pig folder> /usr/local/pig  
-	vi .bashrc  	
+  hive-0.11.1 
+>`	tar -xvzf hive-0.11.1.tar.gz  
+	ln -s <hive folder> /usr/local/hive  
+	vi .bashrc  
+	export HIVE_PREFIX=  
+	export PATH=  
+	exec bash  
+	hive`
+###2. Perform data analytics with hive  
+  * Example -  
+>`	CREATE TABLE book(word STRING);  
+	LOAD DATA INPATH 'hdfs:/data/small/war_and_peace.txt' INTO TABLE book;  
+	SHOW TABLES;  
+	SELECT LOWER(word), COUNT(*) AS Count;`  
+	Browse the web ui  
+
+###Lesson 9 Hbase
+####1. Download and Install Hbase
+  * Download and Install  
+  [www.hbase.apache.org](http://www.hbase.apache.org)  
+  hbase-0.94.17  
+>`	tar -xvzf hbase-0.94.17.tar.gz  
+	ln -s <hbase folder> /usr/local/hbase  
+	vi .bashrc  
+	export HBASE_PREFIX =  
+	export PATH=  
+	exec bash  
+	vi hbase-env.sh  
+	export JAVA_HOME=/usr/local/java  
+	vi hbase-site.xml  
+	hbase.rootdir=hdfs://<server ip>:9000/hbase  
+	vi regionservers  
+	<region server ip>  
+	start-hbase.sh  
+	go to http://<ip>:60010 to verify`  
 	
-  
+###Lession 10 Hadoop Commercial Distribution
+####1. Cloudera VM
+  * Download Cloudera vm  
+  * Show Hue and Cloudera Manager  
+  * Eclipse - WordCount  
+	Add external libraries - all jars in /usr/lib/hadoop  
+	Add all jars in /usr/lib/hadoop/client-0.20  
+	Add /usr/lib/hadoop/lib/commons-httpclient-3.1.jar  
+	Use war_and_peace.txt  
+	
+###Lession 11 ZooKeeper, Flume and Sqoop
+####1. ZooKeeper  
+  * Install and Configure ZooKeeper
+	[zookeeper-3.4.5 http://zookeeper.apache.org](http://zookeeper.apache.org)  
+>`	tar -xzvf zookeeper-3.4.5.tar.gz  
+	ln -s <zookeeper folder> /usr/local/zookeeper  
+	vi .bashrc  
+	export ZOOKEEPER_PREFIX=  
+	export PATH=  
+	exec bash  
+	vi zoo.conf  
+	tickTime=2000  
+	dataDir=/tmp/zookeeper  
+	clientPort=2181  
+	zkServer.sh start  
+	zkCli.sh 172.0.0.1:2181  
+	help  
+	ls /  
+	get /asdfasdf`
+####2. Sqoop  
+  * Install Sqoop
+	[Download version 1.4.4 from http://sqoop.apache.org](http://sqoop.apache.org)  
+>`	tar -xzvf sqoop-1.4.4.bin_hadoop_1.0.0.tar.gz  
+	ln -s <sqoop folder> /usr/local/sqoop  
+	vi .bashrc  
+	export SQOOP_PREFIX  
+	export PATH  
+	exec bash`
+  * Install MySql and create table  
+>`	sudo apt-get install mysql-server  
+	mysql -u root -p  
+	create database sl  
+	use sl  
+	create table authentication(username varchar(30), password varchar(30))  
+	insert into authentication values('admin', '12345')  
+	select * from authentication`
+  * Download MySql Connector  
+	[http://www.mysql.com/downloads/](http://www.mysql.com/downloads/)  
+	use platform independent option  
+>`	cp mysql-connector-java-5.1.34-bin.jar to /usr/local/sqoop/lib`  
+  * Import data to sqoop  
+>`	sqoop list-database --connect "jdbc:mysql//localhost" --username root --password  12345  
+	sqoop import --connect "jdbc:mysql://localhost/sl" --username root --password 12345 --table authentication --target-dir /data/sqoop/output/authentication -m 1`  
+	Browse hdfs web ui  
+  * Export data from sqoop  
+>`	mysql -u root -p  
+	create database sl1  
+	use sl1  
+	create table authentication(username varchar(20), password(20))  
+	quit  
+	sqoop command to export  
+	mysql -u root -p  
+	user sl1  
+	select * from authentication`  
+	
+####3. Flume  
+  * Download and install  
+  [Download version 1.4.0 from http://flume.apache.org](http://flume.apache.org)  
+>`	tar -xzvf apache-flume-1.4.0-bin.tar.gz  
+	ln -s <flume folder> /usr/local/flume  
+	vi .bashrc  
+	export FLUME_PREFIX  
+	export PATH  
+	exec bash  
+	flume-ng  
+	flume-ng version`  
+	
+###Lession 13 Hadoop Administration and Troubleshooting
+####1. Troubleshooting missing datanote  
+  * Format namenode and lose data  
+>`	hadoop namenode -format  
+	start-all.sh  
+	jps`
+  * Troubleshooting  
+>`	vi /usr/local/hadoop/logs/hadoop-hadoop-datanode-<machinename>.log  
+	Note down namespace ID, ie. 1xxxxxx  
+	vi /usr/local/hadoop/tmp/data/current/VERSION  
+	replace the namespace id with 1xxxxx  
+	stop-all.sh  
+	start-all.sh  
+	jps  
+	Check data node exists`
+	
+####2. Optimize hadoop cluster
+  * Create data  
+>`	hadoop jar /usr/local/hadoop/hadoop-examples-1.2.1.jar tergen 5242880 /data/demoinput`  
+	Browse hdfs web ui  
+  * Run test sort  
+>`	hadoop jar /usr/local/hadoop/hadoop -examples-1.2.1.jar tersort /data/demoinput /data/demooutput`
+	Browse mapreduce ui 50030 and check tersort job  
+  * Modify config  
+>`	vi hdfs-site.xml  
+	dfs.replication = 2, dfs.block.size=134217728, dfs.datanode.handler.count=5  
+	vi mapred-site.xml  
+	io.sort.factor=20, io.sort.mb=200, mapred.tasktracker.map.tasks.maximum=3, mapred.reduce.tasks=12, mapred.child.java.opts=-Xmx300m  
+	hadoop dfs -rmr /data/demooutput  
+	hadoop dfs -rmr /data/demoinput  
+	stop-all.sh  
+	start-all.sh  
+	jps  
+	hadoop jar /usr/local/hadoop/hadoop-examples-1.2.1.jar teragen /data/demoinput  
+	hadoop jar hadoop-examples-1.2.1.jar terasort /data/demoinput /data/demooutput`  
+	Brose 50070 web ui for data , click the 2nd job to find execution time.  
+	
+	
+	
+	
+	
+	
