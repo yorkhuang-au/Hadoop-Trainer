@@ -36,54 +36,57 @@
 	ssh <server ip>  `
 		
   * Install Java JDK
->`	sudo apt-get install openjdk-7-jdk 	
-	java -version  
-	java -showversion  
-	update-java-alternatives -l  
-	ln -s <java folder> /usr/local/java  `
+  
+>`	sudo apt-get install openjdk-7-jdk` 	
+	`java -version`  
+	`java -showversion`  
+	`update-java-alternatives -l`  
+	`ln -s <java folder> /usr/local/java  `
 		
   * Download and install Hadoop 1.2.1  
 	Go to [Apache Hadoop homepage](http://hadoop.apache.org/releases.html#Download ) to download Hadoop 1.2.1  
->`   tar -xzvf hadoop-1.2.1.tar.gz  
-	ln -s <hadoop folder> /usr/local/`
-	<br><br>
->`	vi ~/.bashrc  
-	export HADOOP_PREFIX=/usr/local/hadoop  
-	export PATH=$PATH:$HADOOP_PREFIX/bin  
-	exec bash  `
-	<br><br>
->`	vi /usr/local/hadoop/conf/hadoop-env.sh  
-	JAVA_HOME=/usr/local/java  
-	HADOOP_OPTS=`
-	<br><br>
->`	mkdir /usr/local/hadoop/logs  
-	mkdir /usr/local/hadoop/tmp`
-	<br><br>
->`	vi /usr/local/hadoop/conf/core-site.xml  
-	fs.default.name = hdfs://<server ip>:9000  
-	hadoop.tmp.dir = /usr/local/hadoop/tmp`
-	<br><br>
->`	vi /usr/local/hadoop/conf/hdfs-site.xml  
-	dfs.replication = 1`
-	<br><br>
->`	vi /usr/local/hadoop/conf/mapred-site.xml  
-	mapred.job.tracker = <server ip>:9001`
-	<br><br>
->`	vi /usr/local/hadoop/conf/masters  
-	localhost`
-	<br><br>
->`	vi /usr/local/hadoop/conf/slaves  
-	localhost`
-	<br><br>
+	
+>`   tar -xzvf hadoop-1.2.1.tar.gz`  
+	`ln -s <hadoop folder> /usr/local/`
+	
+>`	vi ~/.bashrc`  
+	`export HADOOP_PREFIX=/usr/local/hadoop`  
+	`export PATH=$PATH:$HADOOP_PREFIX/bin`  
+	`exec bash  `
+
+>`	vi /usr/local/hadoop/conf/hadoop-env.sh`  
+	`JAVA_HOME=/usr/local/java`  
+	`HADOOP_OPTS=`
+
+>`	mkdir /usr/local/hadoop/logs`  
+	`mkdir /usr/local/hadoop/tmp`
+
+>`	vi /usr/local/hadoop/conf/core-site.xml`  
+	`fs.default.name = hdfs://<server ip>:9000`  
+	`hadoop.tmp.dir = /usr/local/hadoop/tmp`
+
+>`	vi /usr/local/hadoop/conf/hdfs-site.xml`  
+	`dfs.replication = 1`
+
+>`	vi /usr/local/hadoop/conf/mapred-site.xml`  
+	`mapred.job.tracker = <server ip>:9001`
+
+>`	vi /usr/local/hadoop/conf/masters`  
+	`localhost`
+
+>`	vi /usr/local/hadoop/conf/slaves`  
+	`localhost`
+
 >`	hadoop namenode -format`
 
   * Start/stop hadoop and testing  
->`	start-all.sh  
-	jps  
-	stop-all.sh  
-	hadoop fs -mkdir -ls -copyFromLocal -copyToLocal -cat -rm -rmr  
-	hadoop jar /usr/local/hadoop/hadoop-examples-1.2.1.jar word count <input> <output>`
-	<br><br>
+  
+>`	start-all.sh`  
+	`jps`  
+	`stop-all.sh`  
+	`hadoop fs -mkdir -ls -copyFromLocal -copyToLocal -cat -rm -rmr`  
+	`hadoop jar /usr/local/hadoop/hadoop-examples-1.2.1.jar word count <input> <output>`
+
 	Browse hdfs at http://<server ip>:50070
 
 ####3. Installing Hadoop on Ubantu Cluster  
