@@ -26,14 +26,14 @@
 
   * Install ssh and rsync  
   
->`	sudo apt-get install ssh  
-	sudo apt-get install rsync`  
+>`	sudo apt-get install ssh`  
+	`sudo apt-get install rsync`  
 	
   * Create ssh key
   
->`	ssh_keygen  
-	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys  
-	ssh <server ip>  `
+>`	ssh_keygen`  
+	`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`  
+	`ssh <server ip>  `
 		
   * Install Java JDK
   
