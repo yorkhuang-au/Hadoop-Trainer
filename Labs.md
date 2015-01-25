@@ -21,11 +21,16 @@
 
 ####2. Installing Hadoop on Ubantu Server  
   * Update Ubuntu Server  
+  
 >`	sudo apt-get update`
+
   * Install ssh and rsync  
+  
 >`	sudo apt-get install ssh  
 	sudo apt-get install rsync`  
+	
   * Create ssh key
+  
 >`	ssh_keygen  
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys  
 	ssh <server ip>  `
