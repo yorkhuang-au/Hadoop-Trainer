@@ -2,22 +2,22 @@
 ####1. Installing Ubantu Server  
   * Select OpenSSH
   * Set up static IP (optional)  
+  
 >`	sudo vi /etc/hostname`  
 	`uhs1`  
 	`sudo vi /etc/network/interfaces`  
-	auto eth0  
-	iface eth0 inet static  
-	     address 192.168.186.3  
-	     netmask 255.255.255.0  
-	     gateway 192.168.186.2  
-	     dns-nameservers 192.168.186.2  
-	sudo ifdown eth0  
-	sudo ifup eth0  
-	or sudo reboot
-	`
-	<br><br>
->`	edit c:\windows\system32\drivers\etc\hosts  
-	<server ip> <server name>`
+	`auto eth0`  
+	`iface eth0 inet static`  
+	`address 192.168.186.3`  
+	`netmask 255.255.255.0`  
+	`gateway 192.168.186.2`  
+	`dns-nameservers 192.168.186.2`  
+	`sudo ifdown eth0`  
+	`sudo ifup eth0`  
+	`or sudo reboot`
+
+>`	edit c:\windows\system32\drivers\etc\hosts`  
+	`<server ip> <server name>`
 
 ####2. Installing Hadoop on Ubantu Server  
   * Update Ubuntu Server  
