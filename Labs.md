@@ -203,7 +203,9 @@
   
   * Decomission
   
->`	vi /usr/local/hadoop/conf/exclude`  
+>`	vi hdfs-site.xml`  
+	`dfs.hosts.exclude=/usr/local/hadoop/conf/exclude`  
+	`vi /usr/local/hadoop/conf/exclude`  
 	`ip of nodes to exclude`  
 	`hadoop dfsadmin -refreshNodes`
 ####2. Writable Classes
@@ -286,30 +288,32 @@
 	Try local mode too  
 	
   * Example - Load Temperatures  
->`	hadoop fs -copyFromLocal /home/sl000/data/big/* hdfs:/data/big/  
-	Check .pig_schema file exists
-	pig  
-	jan = LOAD 'hdfs:/data/big/201201hourly.txt' USING PigStorage(',');  
-	feb = LOAD 'hdfs:/data/big/201202hourly.txt' USING PigStorage(',');  
-	mar = LOAD 'hdfs:/data/big/201203hourly.txt' USING PigStorage(',');  
-	apr = LOAD 'hdfs:/data/big/201204hourly.txt' USING PigStorage(',');  
-	STORE jan INTO 'hdfs:/data/big/results/weatherresults1' USING PigStorage('|');`  
+>`	hadoop fs -copyFromLocal /home/sl000/data/big/* hdfs:/data/big/`  
+	`Check .pig_schema file exists`
+	`pig`  
+	`jan = LOAD 'hdfs:/data/big/201201hourly.txt' USING PigStorage(',');`  
+	`feb = LOAD 'hdfs:/data/big/201202hourly.txt' USING PigStorage(',');`  
+	`mar = LOAD 'hdfs:/data/big/201203hourly.txt' USING PigStorage(',');`  
+	`apr = LOAD 'hdfs:/data/big/201204hourly.txt' USING PigStorage(',');`  
+	`STORE jan INTO 'hdfs:/data/big/results/weatherresults1' USING PigStorage('|');`  
 	Browse web ui  
 	
   * Example - Count the Occurances script  
     Create script, run on war_and_peace.txt, browse web ui  
 	
   * Example - Combining, Splitting, and Joining of Temperatures
->`	jan = LOAD 'hdfs:/data/big/201201hourly.txt USING PigStorage(',');  
-	feb = LOAD 'hdfs:/data/big/201202hourly.txt USING PigStorage(',');  
-	mar = LOAD 'hdfs:/data/big/201203hourly.txt USING PigStorage(',');  
-	apr = LOAD 'hdfs:/data/big/201204hourly.txt USING PigStorage(',');  
-	month_quad = UNION jan,feb,mar,apr;  
-	Store month_quad into 'hdfs:/data/big/pigresults/month_quad';`
+  
+>`	jan = LOAD 'hdfs:/data/big/201201hourly.txt USING PigStorage(',');`  
+	`feb = LOAD 'hdfs:/data/big/201202hourly.txt USING PigStorage(',');`  
+	`mar = LOAD 'hdfs:/data/big/201203hourly.txt USING PigStorage(',');`  
+	`apr = LOAD 'hdfs:/data/big/201204hourly.txt USING PigStorage(',');`  
+	`month_quad = UNION jan,feb,mar,apr;`  
+	`Store month_quad into 'hdfs:/data/big/pigresults/month_quad';`
 	
-	Browse the web ui. (50070)  
->`	SPLIT month_quad INTO split_jan IF SUBSTRING (date, 4, 6) == '01', split_feb IF SUBSTRING (date, 4, 6) == '02', split_mar IF SUBSTRING (date, 4, 6) == '03', split_apr IF SUBSRTING (date, 4, 6) == '04';  
-	STORE split_jan INTO 'hdfs:/data/big/results/jan';`
+	Browse the web ui. (50070)
+	
+>`	SPLIT month_quad INTO split_jan IF SUBSTRING (date, 4, 6) == '01', split_feb IF SUBSTRING (date, 4, 6) == '02', split_mar IF SUBSTRING (date, 4, 6) == '03', split_apr IF SUBSRTING (date, 4, 6) == '04';`  
+	`STORE split_jan INTO 'hdfs:/data/big/results/jan';`
 	
 	Browse the web ui again.
 
@@ -323,20 +327,23 @@
 ####1. Download and Install Hive
   * Download and Install
   [www.hive.apache.org](http://www.hive.apache.org)  
-  hive-0.11.1 
->`	tar -xvzf hive-0.11.1.tar.gz  
-	ln -s <hive folder> /usr/local/hive  
-	vi .bashrc  
-	export HIVE_PREFIX=  
-	export PATH=  
-	exec bash  
-	hive`
+  hive-0.11.1
+  
+>`	tar -xvzf hive-0.11.1.tar.gz`  
+	`ln -s <hive folder> /usr/local/hive`  
+	`vi .bashrc`  
+	`export HIVE_PREFIX=`  
+	`export PATH=`  
+	`exec bash`  
+	`hive`
+	
 ###2. Perform data analytics with hive  
   * Example -  
->`	CREATE TABLE book(word STRING);  
-	LOAD DATA INPATH 'hdfs:/data/small/war_and_peace.txt' INTO TABLE book;  
-	SHOW TABLES;  
-	SELECT LOWER(word), COUNT(*) AS Count;`  
+  
+>`	CREATE TABLE book(word STRING);`  
+	`LOAD DATA INPATH 'hdfs:/data/small/war_and_peace.txt' INTO TABLE book;`  
+	`SHOW TABLES;`  
+	`SELECT LOWER(word), COUNT(*) AS Count;`  
 	Browse the web ui  
 
 ###Lesson 9 Hbase
@@ -344,20 +351,21 @@
   * Download and Install  
   [www.hbase.apache.org](http://www.hbase.apache.org)  
   hbase-0.94.17  
->`	tar -xvzf hbase-0.94.17.tar.gz  
-	ln -s <hbase folder> /usr/local/hbase  
-	vi .bashrc  
-	export HBASE_PREFIX =  
-	export PATH=  
-	exec bash  
-	vi hbase-env.sh  
-	export JAVA_HOME=/usr/local/java  
-	vi hbase-site.xml  
-	hbase.rootdir=hdfs://<server ip>:9000/hbase  
-	vi regionservers  
-	<region server ip>  
-	start-hbase.sh  
-	go to http://<ip>:60010 to verify`  
+  
+>`	tar -xvzf hbase-0.94.17.tar.gz`  
+	`ln -s <hbase folder> /usr/local/hbase` 
+	`vi .bashrc`  
+	`export HBASE_PREFIX =`  
+	`export PATH=`  
+	`exec bash`  
+	`vi hbase-env.sh`  
+	`export JAVA_HOME=/usr/local/java`  
+	`vi hbase-site.xml`  
+	`hbase.rootdir=hdfs://<server ip>:9000/hbase`  
+	`vi regionservers`  
+	`<region server ip>`  
+	`start-hbase.sh`  
+	Go to http://<ip>:60010 to verify  
 	
 ###Lession 10 Hadoop Commercial Distribution
 ####1. Cloudera VM
@@ -372,57 +380,67 @@
 ###Lession 11 ZooKeeper, Flume and Sqoop
 ####1. ZooKeeper  
   * Install and Configure ZooKeeper
-	[zookeeper-3.4.5 http://zookeeper.apache.org](http://zookeeper.apache.org)  
->`	tar -xzvf zookeeper-3.4.5.tar.gz  
-	ln -s <zookeeper folder> /usr/local/zookeeper  
-	vi .bashrc  
-	export ZOOKEEPER_PREFIX=  
-	export PATH=  
-	exec bash  
-	vi zoo.conf  
-	tickTime=2000  
-	dataDir=/tmp/zookeeper  
-	clientPort=2181  
-	zkServer.sh start  
-	zkCli.sh 172.0.0.1:2181  
-	help  
-	ls /  
-	get /asdfasdf`
+	[zookeeper-3.4.5 http://zookeeper.apache.org](http://zookeeper.apache.org)
+	
+>`	tar -xzvf zookeeper-3.4.5.tar.gz`  
+	`ln -s <zookeeper folder> /usr/local/zookeeper`  
+	`vi .bashrc`  
+	`export ZOOKEEPER_PREFIX=`  
+	`export PATH=`  
+	`exec bash`  
+	`vi zoo.conf`  
+	`tickTime=2000`  
+	`dataDir=/tmp/zookeeper`  
+	`clientPort=2181`  
+	`zkServer.sh start`  
+	`zkCli.sh 172.0.0.1:2181`  
+	`help`  
+	`ls /`  
+	`get /asdfasdf`
+	
 ####2. Sqoop  
   * Install Sqoop
-	[Download version 1.4.4 from http://sqoop.apache.org](http://sqoop.apache.org)  
->`	tar -xzvf sqoop-1.4.4.bin_hadoop_1.0.0.tar.gz  
-	ln -s <sqoop folder> /usr/local/sqoop  
-	vi .bashrc  
-	export SQOOP_PREFIX  
-	export PATH  
-	exec bash`
+	[Download version 1.4.4 from http://sqoop.apache.org](http://sqoop.apache.org)
+  
+>`	tar -xzvf sqoop-1.4.4.bin_hadoop_1.0.0.tar.gz`  
+	`ln -s <sqoop folder> /usr/local/sqoop`  
+	`vi .bashrc`  
+	`export SQOOP_PREFIX`  
+	`export PATH`  
+	`exec bash`
   * Install MySql and create table  
->`	sudo apt-get install mysql-server  
-	mysql -u root -p  
-	create database sl  
-	use sl  
-	create table authentication(username varchar(30), password varchar(30))  
-	insert into authentication values('admin', '12345')  
-	select * from authentication`
+  
+>`	sudo apt-get install mysql-server`  
+	`mysql -u root -p`  
+	`create database sl`  
+	`use sl`  
+	`create table authentication(username varchar(30), password varchar(30))`  
+	`insert into authentication values('admin', '12345')`  
+	`select * from authentication`
+	
   * Download MySql Connector  
 	[http://www.mysql.com/downloads/](http://www.mysql.com/downloads/)  
 	use platform independent option  
+	
 >`	cp mysql-connector-java-5.1.34-bin.jar to /usr/local/sqoop/lib`  
+
   * Import data to sqoop  
->`	sqoop list-database --connect "jdbc:mysql//localhost" --username root --password  12345  
-	sqoop import --connect "jdbc:mysql://localhost/sl" --username root --password 12345 --table authentication --target-dir /data/sqoop/output/authentication -m 1`  
+  
+>`	sqoop list-database --connect "jdbc:mysql//localhost" --username root --password  12345`  
+	`sqoop import --connect "jdbc:mysql://localhost/sl" --username root --password 12345 --table authentication --target-dir /data/sqoop/output/authentication -m 1`  
 	Browse hdfs web ui  
+	
   * Export data from sqoop  
->`	mysql -u root -p  
-	create database sl1  
-	use sl1  
-	create table authentication(username varchar(20), password(20))  
-	quit  
-	sqoop command to export  
-	mysql -u root -p  
-	user sl1  
-	select * from authentication`  
+  
+>`	mysql -u root -p`  
+	`create database sl1`  
+	`use sl1`  
+	`create table authentication(username varchar(20), password(20))`  
+	`quit`  
+	`sqoop command to export`  
+	`mysql -u root -p`  
+	`user sl1`  
+	`select * from authentication`  
 	
 ####3. Flume  
   * Download and install  
