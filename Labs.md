@@ -3,7 +3,7 @@
   * Select OpenSSH
   * Set up static IP (optional)  
   
->`	sudo vi /etc/hostname   
+>`	sudo vi /etc/hostname<br>
 	uhs1  
 	sudo vi /etc/network/interfaces  
 	auto eth0  
