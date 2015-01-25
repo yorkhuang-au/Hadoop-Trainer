@@ -2,10 +2,9 @@
 ####1. Installing Ubantu Server  
   * Select OpenSSH
   * Set up static IP (optional)  
-  
->`	sudo vi /etc/hostname`
-	`uhs1`
-	`sudo vi /etc/network/interfaces`
+>`	sudo vi /etc/hostname`  
+	`uhs1`  
+	`sudo vi /etc/network/interfaces`  
 	auto eth0  
 	iface eth0 inet static  
 	     address 192.168.186.3  
