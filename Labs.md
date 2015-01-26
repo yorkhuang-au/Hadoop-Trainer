@@ -414,35 +414,42 @@
 	`export ZOOKEEPER_PREFIX=`  
 	`export PATH=`  
 	`exec bash`  
+	`cp zoo_sample.cfg zoo.cfg`
 	`vi zoo.conf`  
 	`tickTime=2000`  
 	`dataDir=/tmp/zookeeper`  
 	`clientPort=2181`  
 	`zkServer.sh start`  
-	`zkCli.sh 172.0.0.1:2181`  
+	`zkCli.sh -server 127.0.0.1:2181`  
 	`help`  
 	`ls /`  
-	`get /asdfasdf`
+	`ls /hbase`  
+	`get /hbase`
 	
 ####2. Sqoop  
   * Install Sqoop
-	[Download version 1.4.4 from http://sqoop.apache.org](http://sqoop.apache.org)
+	[Download version 1.4.5 from http://apache.mirror.uber.com.au/sqoop/1.4.5/sqoop-1.4.5.bin__hadoop-1.0.0.tar.gz ](http://apache.mirror.uber.com.au/sqoop/1.4.5/sqoop-1.4.5.bin__hadoop-1.0.0.tar.gz)
   
->`	tar -xzvf sqoop-1.4.4.bin_hadoop_1.0.0.tar.gz`  
+>`	tar -xzvf sqoop-1.4.5.bin__hadoop-1.0.0.tar.gz`  
 	`ln -s <sqoop folder> /usr/local/sqoop`  
 	`vi .bashrc`  
 	`export SQOOP_PREFIX`  
 	`export PATH`  
 	`exec bash`
+	`cp /usr/local/sqoop/conf/sqoop-env.template.sh /usr/local/sqoop/conf/sqoop-env.sh`  
+	`vi sqoop-env.sh`  
+	`export HADOOP_COMMON_HOME=/usr/local/hadoop`  
+	`export HADOOP_MAPRED_HOME=/usr/local/hadoop`  
+	
   * Install MySql and create table  
   
 >`	sudo apt-get install mysql-server`  
 	`mysql -u root -p`  
-	`create database sl`  
-	`use sl`  
-	`create table authentication(username varchar(30), password varchar(30))`  
-	`insert into authentication values('admin', '12345')`  
-	`select * from authentication`
+	`create database sl;`  
+	`use sl;`  
+	`create table authentication(username varchar(30), password varchar(30));`  
+	`insert into authentication values('admin', '12345');`  
+	`select * from authentication;`
 	
   * Download MySql Connector  
 	[http://www.mysql.com/downloads/](http://www.mysql.com/downloads/)  
@@ -451,22 +458,25 @@
 >`	cp mysql-connector-java-5.1.34-bin.jar to /usr/local/sqoop/lib`  
 
   * Import data to sqoop  
-  
->`	sqoop list-database --connect "jdbc:mysql//localhost" --username root --password  12345`  
-	`sqoop import --connect "jdbc:mysql://localhost/sl" --username root --password 12345 --table authentication --target-dir /data/sqoop/output/authentication -m 1`  
+>`	mysql`  
+	`create user hadoop;`  
+	`grant all privileges on *.* to 'hadoop'@'localhost' identified by 'hadoop';`  
+	
+>`	sqoop list-databases --connect "jdbc:mysql://localhost" --username hadoop --password  hadoop`  
+	`sqoop import --connect "jdbc:mysql://localhost/sl" --username hadoop --password hadoop --table authentication --target-dir /data/sqoop/output/authentication -m 1`  
 	Browse hdfs web ui  
 	
   * Export data from sqoop  
   
->`	mysql -u root -p`  
-	`create database sl1`  
-	`use sl1`  
-	`create table authentication(username varchar(20), password(20))`  
-	`quit`  
-	`sqoop command to export`  
-	`mysql -u root -p`  
-	`user sl1`  
-	`select * from authentication`  
+>`	mysql -u hadoop -p`  
+	`create database s2;`  
+	`use s2;`  
+	`create table authentication(username varchar(20), password varchar(20));`  
+	`quit;`  
+	`sqoop export --connect "jdbc:mysql://localhost/s2" --username hadoop --password hadoop --table authentication --export-dir /data/sqoop/output/authentication/`  
+	`mysql -u hadoop -p;`  
+	`user s2;`  
+	`select * from authentication;`  
 	
 ####3. Flume  
   * Download and install  
