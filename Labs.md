@@ -222,6 +222,7 @@
 >`	tar -xvzf pig-0.11.1.tar.gz`  
 	`ln -s <pig folder> /usr/local/pig`  
 	`vi .bashrc`  
+	`export JAVA_HOME`  
 	`export PIG_PREFIX`  
 	`export PATH`  
 	`pig -x local`  
@@ -261,9 +262,9 @@
 	
   *	Local Mode  
   
->`	pig -x local`
-	`ls ~/data/testing`
-	`file = LOAD 'hdfs:/data/testing/testdata.txt' USING PigStorage() AS (lines:chararray);`  
+>`	pig -x local`  
+	`ls /home/hadoop/data/testing`  
+	`file = LOAD '/home/hadoop/data/testing/testdata.txt' USING PigStorage() AS (lines:chararray);`  
 	`words = FOREACH file GENERATE FLATTEN(TOKENIZE(lines)) as word;`  
 	`dump words;`
   
@@ -279,7 +280,7 @@
 	
   *	Example - WordCount  
   
->`	file=load ’hdfs:/data/testing/testdata.txt’ using PigStorage() as (line:chararray);`  
+>`	file = load ’hdfs:/data/testing/testdata.txt’ using PigStorage() as (line:chararray);`  
 	`words = foreach file generate flatten(tokenize(lines)) as word;`  
 	`wgroup = group words by word;`  
 	`wagg = foreach wgroup generate group as word, count(words);`  
@@ -289,7 +290,7 @@
 	
   * Example - Load Temperatures  
 >`	hadoop fs -copyFromLocal /home/sl000/data/big/* hdfs:/data/big/`  
-	`Check .pig_schema file exists`
+	`Check .pig_schema file exists`  
 	`pig`  
 	`jan = LOAD 'hdfs:/data/big/201201hourly.txt' USING PigStorage(',');`  
 	`feb = LOAD 'hdfs:/data/big/201202hourly.txt' USING PigStorage(',');`  
@@ -445,6 +446,7 @@
 ####3. Flume  
   * Download and install  
   [Download version 1.4.0 from http://flume.apache.org](http://flume.apache.org)  
+  
 >`	tar -xzvf apache-flume-1.4.0-bin.tar.gz  
 	ln -s <flume folder> /usr/local/flume  
 	vi .bashrc  
@@ -492,7 +494,12 @@
 	Brose 50070 web ui for data , click the 2nd job to find execution time.  
 	
 	
-	
-	
+###Tooltips
+####1. Access usb on ubuntu
+	In the vm setting show all usb devices  
+	`sudo fdisk -l`  
+	`sudo  mkdir /media/usb`  
+	`sudo mount /dev/sdb1 /media/usb`  
+	`sudo umount /media/usb`  
 	
 	
