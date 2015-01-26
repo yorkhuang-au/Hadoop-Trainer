@@ -8,9 +8,8 @@ apr = LOAD 'hdfs:/data/big/201204hourly.txt USING PigStorage(',');
 month_quad = UNION jan,feb,mar,apr;
 
 --Splitting relations
-SPLIT month_quad INTO split_jan IF SUBSTRING(date, 4, 6) == '01', split_feb IF SUBSTRING(date, 4, 6) == '02', split_mar IF SUBSTRING(date, 4, 6) == '03', split_apr IF SUBSTRING(date, 4, 6) == '04';
+SPLIT month_quad INTO split_jan IF SUBSTRING(Date, 4, 6) == '01', split_feb IF SUBSTRING(Date, 4, 6) == '02', split_mar IF SUBSTRING(Date, 4, 6) == '03', split_apr IF SUBSTRING(Date, 4, 6) == '04';
 
---JOining all relations
 
 wstatns = LOAD 'hdfs:/data/big/stations.txt' USING PigStorage() AD (id:int, name:chararray);
 
