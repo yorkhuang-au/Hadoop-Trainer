@@ -488,7 +488,19 @@
 	`export FLUME_PREFIX`  
 	`export PATH`  
 	`exec bash`  
-	`flume-ng`  
+	`vi /usr/local/flume/conf/flume.conf`  
+	`see york's github`  
+	`vi log4???`  
+	`check but keep the no change`  
+	`chmod a+w /var/log`  
+	`create generate_logs.py`  
+	`flume-ng agent -c /usr/local/flume/conf -f /usr/local/flume/conf/flume.conf -n sandbox`  
+	
+	Open another terminal ALT+F2
+	
+>	`python generate_logs.py`  
+	`ls -l /var/log/eventLog*`  
+	`hadoop fs -ls /flume/events`  
 	`flume-ng version`  
 	
 ###Lession 13 Hadoop Administration and Troubleshooting
