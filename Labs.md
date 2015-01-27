@@ -285,10 +285,10 @@
 	`wgroup = group words by word;`  
 	`wagg = foreach wgroup generate group as word, count(words);`  
 	`dump wagg;`  
-	
-	Try local mode too  
+#####Try local mode too  
 	
   * Example - Load Temperatures  
+  
 >`	hadoop fs -copyFromLocal /home/sl000/data/big/* hdfs:/data/big/`  
 	`Check .pig_schema file exists`  
 	`pig`  
@@ -297,7 +297,8 @@
 	`mar = LOAD 'hdfs:/data/big/201203hourly.txt' USING PigStorage(',');`  
 	`apr = LOAD 'hdfs:/data/big/201204hourly.txt' USING PigStorage(',');`  
 	`STORE jan INTO 'hdfs:/data/big/results/weatherresults1' USING PigStorage('|');`  
-	Browse web ui  
+	
+>	Browse web ui  
 	
   * Example - Count the Occurances script  
     Create script, run on war_and_peace.txt, browse web ui  
@@ -309,14 +310,14 @@
 	`mar = LOAD 'hdfs:/data/big/201203hourly.txt USING PigStorage(',');`  
 	`apr = LOAD 'hdfs:/data/big/201204hourly.txt USING PigStorage(',');`  
 	`month_quad = UNION jan,feb,mar,apr;`  
-	`Store month_quad into 'hdfs:/data/big/pigresults/month_quad';`
+	`Store month_quad into 'hdfs:/data/big/pigresults/month_quad';`  
 	
-	Browse the web ui. (50070)
+>	Browse the web ui - 50070  
 	
->`	SPLIT month_quad INTO split_jan IF SUBSTRING (date, 4, 6) == '01', split_feb IF SUBSTRING (date, 4, 6) == '02', split_mar IF SUBSTRING (date, 4, 6) == '03', split_apr IF SUBSRTING (date, 4, 6) == '04';`  
-	`STORE split_jan INTO 'hdfs:/data/big/results/jan';`
+>`	SPLIT month_quad INTO split_jan IF SUBSTRING (Date, 4, 6) == '01', split_feb IF SUBSTRING (Date, 4, 6) == '02', split_mar IF SUBSTRING (Date, 4, 6) == '03', split_apr IF SUBSRTING (Date, 4, 6) == '04';`  
+	`STORE split_jan INTO 'hdfs:/data/big/results/jan';`  
 	
-	Browse the web ui again.
+>	Browse the web ui again.
 
   * Example - Transform and shape Temperatures Script  
 	Create, run and browse.
@@ -326,9 +327,8 @@
 
 ###Lesson 8 Hive
 ####1. Download and Install Hive
-  * Download and Install
-  [www.hive.apache.org](http://www.hive.apache.org)  
-  hive-0.11.1
+  * Download and Install  
+  [  hive-0.11.1 https://archive.apache.org/dist/hive/hive-0.11.0/](https://archive.apache.org/dist/hive/hive-0.11.0/)  
   
 >`	tar -xvzf hive-0.11.1.tar.gz`  
 	`ln -s <hive folder> /usr/local/hive`  
@@ -341,11 +341,20 @@
 ###2. Perform data analytics with hive  
   * Example -  
   
->`	CREATE TABLE book(word STRING);`  
+>`	CREATE TABLE book(word STRING)`  
+	`ROW FORMAT DELIMITED`  
+	`FIELDS TERMINATED BY ' '`  
+	`LINES  TERMINATED BY '\';`  
 	`LOAD DATA INPATH 'hdfs:/data/small/war_and_peace.txt' INTO TABLE book;`  
 	`SHOW TABLES;`  
-	`SELECT LOWER(word), COUNT(*) AS Count;`  
-	Browse the web ui  
+	`DESCRIBE book;`  
+	`SELECT LOWER(word), COUNT(*) AS Count FROM book`  
+	`WHERE lower(substring(word,1,3))='was'`  
+	`GROUP BY word`  
+	`HAVING COUNT > 5`  
+	`SORT BY COUNT DESC;`  
+	
+	Observe job result on the screen
 
 ###Lesson 9 Hbase
 ####1. Download and Install Hbase
@@ -368,6 +377,22 @@
 	`start-hbase.sh`  
 	Go to http://<ip>:60010 to verify  
 	
+####2. Run hbase shell (Optional)
+  * Run hbase shell
+  
+>`	hbase shell`  
+	`help`  
+	`create 'tbl1', 'cf1'`  
+	`list 'tbl1'`  
+	`put 'tbl1', 'row1', 'cf1:a', 'val1'`  
+	`put 'tbl1', 'row2', 'cf1:b', 'val2'`  
+	`put 'tbl1', 'row3', 'cf1:c', 'val3'`  
+	`scan 'tbl1'`  
+	`get 'tbl1', 'row1'`  
+	`disable 'tbl1'`  
+	`enable 'tbl1'`  
+	`stop-hbase.sh`  
+	
 ###Lession 10 Hadoop Commercial Distribution
 ####1. Cloudera VM
   * Download Cloudera vm  
@@ -389,35 +414,42 @@
 	`export ZOOKEEPER_PREFIX=`  
 	`export PATH=`  
 	`exec bash`  
+	`cp zoo_sample.cfg zoo.cfg`
 	`vi zoo.conf`  
 	`tickTime=2000`  
 	`dataDir=/tmp/zookeeper`  
 	`clientPort=2181`  
 	`zkServer.sh start`  
-	`zkCli.sh 172.0.0.1:2181`  
+	`zkCli.sh -server 127.0.0.1:2181`  
 	`help`  
 	`ls /`  
-	`get /asdfasdf`
+	`ls /hbase`  
+	`get /hbase`
 	
 ####2. Sqoop  
   * Install Sqoop
-	[Download version 1.4.4 from http://sqoop.apache.org](http://sqoop.apache.org)
+	[Download version 1.4.5 from http://apache.mirror.uber.com.au/sqoop/1.4.5/sqoop-1.4.5.bin__hadoop-1.0.0.tar.gz ](http://apache.mirror.uber.com.au/sqoop/1.4.5/sqoop-1.4.5.bin__hadoop-1.0.0.tar.gz)
   
->`	tar -xzvf sqoop-1.4.4.bin_hadoop_1.0.0.tar.gz`  
+>`	tar -xzvf sqoop-1.4.5.bin__hadoop-1.0.0.tar.gz`  
 	`ln -s <sqoop folder> /usr/local/sqoop`  
 	`vi .bashrc`  
 	`export SQOOP_PREFIX`  
 	`export PATH`  
 	`exec bash`
+	`cp /usr/local/sqoop/conf/sqoop-env.template.sh /usr/local/sqoop/conf/sqoop-env.sh`  
+	`vi sqoop-env.sh`  
+	`export HADOOP_COMMON_HOME=/usr/local/hadoop`  
+	`export HADOOP_MAPRED_HOME=/usr/local/hadoop`  
+	
   * Install MySql and create table  
   
 >`	sudo apt-get install mysql-server`  
 	`mysql -u root -p`  
-	`create database sl`  
-	`use sl`  
-	`create table authentication(username varchar(30), password varchar(30))`  
-	`insert into authentication values('admin', '12345')`  
-	`select * from authentication`
+	`create database sl;`  
+	`use sl;`  
+	`create table authentication(username varchar(30), password varchar(30));`  
+	`insert into authentication values('admin', '12345');`  
+	`select * from authentication;`
 	
   * Download MySql Connector  
 	[http://www.mysql.com/downloads/](http://www.mysql.com/downloads/)  
@@ -426,71 +458,81 @@
 >`	cp mysql-connector-java-5.1.34-bin.jar to /usr/local/sqoop/lib`  
 
   * Import data to sqoop  
-  
->`	sqoop list-database --connect "jdbc:mysql//localhost" --username root --password  12345`  
-	`sqoop import --connect "jdbc:mysql://localhost/sl" --username root --password 12345 --table authentication --target-dir /data/sqoop/output/authentication -m 1`  
+>`	mysql`  
+	`create user hadoop;`  
+	`grant all privileges on *.* to 'hadoop'@'localhost' identified by 'hadoop';`  
+	
+>`	sqoop list-databases --connect "jdbc:mysql://localhost" --username hadoop --password  hadoop`  
+	`sqoop import --connect "jdbc:mysql://localhost/sl" --username hadoop --password hadoop --table authentication --target-dir /data/sqoop/output/authentication -m 1`  
 	Browse hdfs web ui  
 	
   * Export data from sqoop  
   
->`	mysql -u root -p`  
-	`create database sl1`  
-	`use sl1`  
-	`create table authentication(username varchar(20), password(20))`  
-	`quit`  
-	`sqoop command to export`  
-	`mysql -u root -p`  
-	`user sl1`  
-	`select * from authentication`  
+>`	mysql -u hadoop -p`  
+	`create database s2;`  
+	`use s2;`  
+	`create table authentication(username varchar(20), password varchar(20));`  
+	`quit;`  
+	`sqoop export --connect "jdbc:mysql://localhost/s2" --username hadoop --password hadoop --table authentication --export-dir /data/sqoop/output/authentication/`  
+	`mysql -u hadoop -p;`  
+	`user s2;`  
+	`select * from authentication;`  
 	
 ####3. Flume  
   * Download and install  
   [Download version 1.4.0 from http://flume.apache.org](http://flume.apache.org)  
   
->`	tar -xzvf apache-flume-1.4.0-bin.tar.gz  
-	ln -s <flume folder> /usr/local/flume  
-	vi .bashrc  
-	export FLUME_PREFIX  
-	export PATH  
-	exec bash  
-	flume-ng  
-	flume-ng version`  
+>`	tar -xzvf apache-flume-1.4.0-bin.tar.gz`  
+	`ln -s <flume folder> /usr/local/flume`  
+	`vi .bashrc`  
+	`export FLUME_PREFIX`  
+	`export PATH`  
+	`exec bash`  
+	`flume-ng`  
+	`flume-ng version`  
 	
 ###Lession 13 Hadoop Administration and Troubleshooting
 ####1. Troubleshooting missing datanote  
   * Format namenode and lose data  
->`	hadoop namenode -format  
-	start-all.sh  
-	jps`
+  
+>`	hadoop namenode -format`  
+	`start-all.sh`  
+	`jps`
   * Troubleshooting  
->`	vi /usr/local/hadoop/logs/hadoop-hadoop-datanode-<machinename>.log  
-	Note down namespace ID, ie. 1xxxxxx  
-	vi /usr/local/hadoop/tmp/data/current/VERSION  
-	replace the namespace id with 1xxxxx  
-	stop-all.sh  
-	start-all.sh  
-	jps  
-	Check data node exists`
+  
+>`	vi /usr/local/hadoop/logs/hadoop-hadoop-datanode-<machinename>.log`  
+	`Note down namespace ID, ie. 1xxxxxx`  
+	`vi /usr/local/hadoop/tmp/data/current/VERSION`  
+	`replace the namespace id with 1xxxxx`  
+	`stop-all.sh`  
+	`start-all.sh`  
+	`jps`  
+	`Check data node exists`
 	
 ####2. Optimize hadoop cluster
   * Create data  
+  
 >`	hadoop jar /usr/local/hadoop/hadoop-examples-1.2.1.jar tergen 5242880 /data/demoinput`  
 	Browse hdfs web ui  
+	
   * Run test sort  
+  
 >`	hadoop jar /usr/local/hadoop/hadoop -examples-1.2.1.jar tersort /data/demoinput /data/demooutput`
 	Browse mapreduce ui 50030 and check tersort job  
+	
   * Modify config  
->`	vi hdfs-site.xml  
-	dfs.replication = 2, dfs.block.size=134217728, dfs.datanode.handler.count=5  
-	vi mapred-site.xml  
-	io.sort.factor=20, io.sort.mb=200, mapred.tasktracker.map.tasks.maximum=3, mapred.reduce.tasks=12, mapred.child.java.opts=-Xmx300m  
-	hadoop dfs -rmr /data/demooutput  
-	hadoop dfs -rmr /data/demoinput  
-	stop-all.sh  
-	start-all.sh  
-	jps  
-	hadoop jar /usr/local/hadoop/hadoop-examples-1.2.1.jar teragen /data/demoinput  
-	hadoop jar hadoop-examples-1.2.1.jar terasort /data/demoinput /data/demooutput`  
+  
+>`	vi hdfs-site.xml`  
+	`dfs.replication = 2, dfs.block.size=134217728, dfs.datanode.handler.count=5`  
+	`vi mapred-site.xml`  
+	`io.sort.factor=20, io.sort.mb=200, mapred.tasktracker.map.tasks.maximum=3, mapred.reduce.tasks=12, mapred.child.java.opts=-Xmx300m`  
+	`hadoop dfs -rmr /data/demooutput`  
+	`hadoop dfs -rmr /data/demoinput`  
+	`stop-all.sh`  
+	`start-all.sh`  
+	`jps`  
+	`hadoop jar /usr/local/hadoop/hadoop-examples-1.2.1.jar teragen /data/demoinput`  
+	`hadoop jar hadoop-examples-1.2.1.jar terasort /data/demoinput /data/demooutput`  
 	Brose 50070 web ui for data , click the 2nd job to find execution time.  
 	
 	
