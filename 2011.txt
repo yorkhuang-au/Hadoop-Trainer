@@ -1,0 +1,40 @@
+Table with row headings in column A and column headings in rows 4 to 6.														
+Table 1.  Perceived Health Status by Selected Characteristics: 2011														
+(Numbers in thousands.   Only people in the noninstitutionalized population)														
+Characteristic	"Total 
+Number"	Health Status (percent)												
+		Excellent		Very Good		Good		Fair		Poor				
+		Estimate	Standard Error\1	Estimate	Standard Error\1	Estimate	Standard Error\1	Estimate	Standard Error\1	Estimate	Standard Error\1			
+All people	"306,500"	32.86	0.29	33.78	0.30	22.91	0.20	8.17	0.12	2.28	0.06			
+Sex														
+  .Male	"150,517"	34.40	0.36	33.36	0.35	22.25	0.26	7.85	0.15	2.14	0.09			
+  .Female	"155,983"	31.38	0.30	34.19	0.32	23.55	0.24	8.47	0.15	2.41	0.08			
+Race and Hispanic origin\2														
+"  .White, non-Hispanic"	"197,398"	32.85	0.36	33.94	0.35	22.77	0.24	8.08	0.15	2.36	0.07			
+"  .Black, non-Hispanic"	"36,677"	28.73	0.69	32.81	0.72	25.56	0.62	10.39	0.36	2.51	0.17			
+"  .Other, non-Hispanic"	"21,806"	33.23	0.88	34.26	0.84	22.28	0.71	7.90	0.39	2.32	0.18			
+  .Hispanic	"50,618"	35.74	0.74	33.68	0.71	21.81	0.51	7.01	0.30	1.76	0.14			
+Age														
+   .Under 18 years	"74,666"	59.24	0.56	29.00	0.54	10.15	0.29	1.40	0.09	0.21	0.04			
+  .18 years and older	"231,833"	24.37	0.27	35.32	0.29	27.02	0.24	10.35	0.16	2.94	0.08			
+  .Less than 65 years	"266,524"	36.29	0.33	34.80	0.33	20.86	0.21	6.42	0.12	1.63	0.06			
+       ..18 to 24 years	"29,874"	43.70	0.81	34.91	0.74	17.41	0.53	3.57	0.23	0.40	0.08			
+       ..25 to 44 years	"80,971"	30.50	0.43	39.07	0.49	23.12	0.34	6.15	0.21	1.16	0.08			
+       ..45 to 64 years	"81,014"	18.20	0.33	35.85	0.37	29.74	0.40	12.35	0.27	3.86	0.15			
+       ..18 to 64 years	"191,858"	27.36	0.32	37.06	0.33	25.03	0.26	8.37	0.16	2.18	0.08			
+  .65 years and over	"39,975"	10.00	0.30	26.96	0.50	36.60	0.49	19.84	0.41	6.59	0.28			
+Family income as a percentage of poverty threshold\3														
+  .Less than 200 percent	"114,426"	29.59	0.44	30.72	0.41	25.08	0.35	11.10	0.24	3.50	0.11			
+       ..Less than 100 percent (in poverty)	"51,071"	30.05	0.60	31.02	0.58	24.76	0.52	10.70	0.37	3.47	0.18			
+       ..100 percent to less than 200 percent 	"63,354"	29.23	0.57	30.48	0.55	25.34	0.44	11.43	0.26	3.53	0.17			
+ .200 percent or higher	"191,470"	34.76	0.36	35.62	0.35	21.64	0.24	6.43	0.13	1.55	0.06			
+       ..200 percent to less than 300 percent 	"52,006"	30.23	0.67	33.75	0.59	24.88	0.49	8.81	0.28	2.33	0.15			 
+       ..300 percent to less than 400 percent 	"41,970"	32.79	0.69	34.91	0.64	23.10	0.52	7.28	0.25	1.92	0.16			
+       ..400 percent or higher	"97,494"	38.03	0.44	36.92	0.43	19.28	0.30	4.79	0.15	0.98	0.07			
+Footnotes: 														
+"1. Standard error estimates were calculated using replicate weights, Fay's Method."														
+"2. Federal surveys now give respondents the option of reporting more than one race. Therefore, two basic ways of defining a race group are possible. A group, such as Black, may be defined as those who reported Black and no other race (the race-alone or the single-race concept) or as those who reported Black regardless of whether they also reported another race (the race-alone-or-in-combination concept). Hispanics may be any race. The body of this report (text, figures, and tables) shows data for people who reported they were a single race. Use of the single-race concept does not imply that it is the preferred method of presenting or analyzing data. The Census Bureau uses a variety of approaches. In this report, the term ""non-Hispanic White"" refers to people who are not Hispanic and reported White and no other race. ""Non-Hispanic Black"" refers to people who are not Hispanic and reported Black and no other race. ""Non-Hispanic Other"" refers to people whe are not Hispanic and reported Asian alone, Pacific Islander alone, American Indian alone, Alaskan Native alone, or mutiple races."														
+"3. The poverty universe is slightly smaller than that reported under ""All People"" as it excludes people less than 15 years old with no cohabitating relatives, who are not asked income questions."														
+"Source: U.S. Census Bureau, Survey of Income and Program Participation, 2008 Panel, Wave 10 topical module and core survey data. For information on confidentiality protection, sampling and non-sampling error see <http://www.census.gov/sipp/source.html>."														
+														
+														
