@@ -31,7 +31,7 @@
 	
   * Create ssh key
   
->`	ssh_keygen`  
+>`	ssh-keygen`  
 	`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`  
 	`ssh <server ip>  `
 		
@@ -47,7 +47,7 @@
 	Go to [Apache Hadoop homepage](http://hadoop.apache.org/releases.html#Download ) to download Hadoop 1.2.1  
 	
 >`   tar -xzvf hadoop-1.2.1.tar.gz`  
-	`ln -s <hadoop folder> /usr/local/`
+	`ln -s <hadoop folder> /usr/local/hadoop`
 	
 >`	vi ~/.bashrc`  
 	`export HADOOP_PREFIX=/usr/local/hadoop`  
